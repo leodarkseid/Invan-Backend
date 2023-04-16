@@ -7,4 +7,11 @@ class UserSerialzers(serializers.ModelSerializer):
         fields = "__all__"
 
     email = serializers.EmailField()
-    first_name = serializers.CharField
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    username = serializers.CharField()
+    password = serializers.CharField()
+    bio = serializers.CharField()
+
+    def create(self, validated_data):
+        return User.objects.create(**validated_data)
