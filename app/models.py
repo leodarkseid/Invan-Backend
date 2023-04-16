@@ -16,7 +16,3 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = UserManager()
-
-class No(models.Model):
-    goat = models.CharField(max_length=20)
-    
