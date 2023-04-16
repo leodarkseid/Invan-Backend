@@ -18,3 +18,9 @@ User TABLES
 7. created_at
 8. updated_at
 9. bio
+
+APIs for models
+1. register
+2. login
+3. get user by id
+4. follow/unfollow an user
