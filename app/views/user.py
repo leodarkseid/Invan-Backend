@@ -2,14 +2,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from app.serializer import UserSerialzers, UserLoginSerializers
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from app.serializer import UserSerializers, UserLoginSerializers
 from app.models import User
 
 from rest_framework.authtoken.models import Token
 
 class CreateUser(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerialzers
+    serializer_class = UserSerializers
 
 class LoginView(APIView):
     def post(self, request):
@@ -28,5 +30,40 @@ class LoginView(APIView):
                 return Response({"success":False, "message":"user does not exist"})
 
 class RetrieveUser(generics.RetrieveAPIView):
-    pass
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
+
+class UpdateUser(APIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        serializer = self.serializer_class(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success": True, "message":"user updated"})
+        else:
+            print(serializer.errors)
+            return Response({"success":False, "message":"error updating user"})
         
+class DeleteUser(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+    def destroy(self, request, pk):
+        try:
+            user = User.objects.get(id=pk)
+            if pk == request.user.id:
+                self.perform_destroy(request.user)
+                return Response({"success":True, "message":"user deleted"})
+            else:
+                return Response({"success":False, "message":"delete operation failed"})
+        except ObjectDoesNotExist:
+            return Response({"success":False, "message":"user does not exist"})
+        
+    

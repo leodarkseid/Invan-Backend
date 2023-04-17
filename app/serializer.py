@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from app.models import User
+from app.models import User, Post
 
-class UserSerialzers(serializers.ModelSerializer):
+class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
@@ -19,4 +19,12 @@ class UserSerialzers(serializers.ModelSerializer):
 class UserLoginSerializers(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
-    
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = "__all__"
+    title = serializers.CharField()
+    description = serializers.CharField()
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+

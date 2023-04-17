@@ -24,3 +24,16 @@ APIs for models
 2. login
 3. get user by id
 4. follow/unfollow an user
+
+Post TABLE
+1.  id 
+2.  title
+3.  description
+4.  created_at
+5.  updated_at
+6.  user
+
+APIs for post model
+1.  CRUd post
+2.  like a post
+3.  Comment on a post
