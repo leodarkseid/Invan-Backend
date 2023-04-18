@@ -37,3 +37,7 @@ APIs for post model
 1.  CRUd post
 2.  like a post
 3.  Comment on a post
+
+POSTLike Table:
+1. Post
+2. User

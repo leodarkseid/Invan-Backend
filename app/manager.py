@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
     
     def create_superuser(self,email,password, **kwargs):
         kwargs.setdefault("is_active", True)
-        kwargs.setdefault("is_staff", False)
+        kwargs.setdefault("is_staff", True)
         kwargs.setdefault("is_superuser", True)
 
         if kwargs.get('is_staff') is not True:
@@ -19,4 +19,4 @@ class UserManager(BaseUserManager):
         if kwargs.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
         
-        return self.create_user(email, password, **kwargs)
+        return self.model.create_user(email, password, **kwargs)
