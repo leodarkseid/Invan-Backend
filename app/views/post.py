@@ -63,4 +63,5 @@ class RetrieveUserPosts(generics.ListAPIView):
         user_posts = Post.objects.filter(user=request.user.id)
         serializer = self.serializer_class(user_posts, many=True)
         return Response({"success":"True","post":serializer.data})
-    
+
+class LikePost()
